@@ -224,7 +224,7 @@ songs = [
     ['An Army Of Stompers - Freddy in Space 3: Chica in Space', 'Dw5HAO5EcU8'],
     ['97 115 99 105 105 10 (Merch Cemetery) - Freddy in Space 3: Chica in Space', '6UaOGxUSiB4'],
     ['A Wheel of Shadows - Freddy in Space 3: Chica in Space', 'tviyPJ1GOMk'],
-    ['Down The Drain It Goes - Freddy in Space 3: Chica in Space', 'LINK'],
+    ['Down The Drain It Goes - Freddy in Space 3: Chica in Space', 'Gujy8hEIv1Q'],
     ['Victory Theme - Freddy in Space 3: Chica in Space', 'z5jAPILf1hU'],
 
     //help wanted 2
@@ -330,7 +330,7 @@ songs = [
     ['Real Wild Child (Wild One) - Five Nights at Freddy＇s (Movie)', 'buOahI4oRF8'],
     ['Celebration - Five Nights at Freddy＇s (Movie)', 'G8i6NIUbaGY'],
     ['I Wanna Be Down - Five Nights at Freddy＇s (Movie)', 'h7hzEKIhYJ4'],
-    ['Five Nights at Freddy＇s (The Living Tombstone) - Five Nights at Freddy＇s (Movie)', 'nB3JcY3kMrE'],
+    //['Five Nights at Freddy＇s (The Living Tombstone) - Five Nights at Freddy＇s (Movie)', 'nB3JcY3kMrE'],
         //freddys fanzone
     ['Don＇t Tell Me More - Freddy＇s Fanzone', 'PFshlgCcBK0'],
 

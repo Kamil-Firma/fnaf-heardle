@@ -19,43 +19,6 @@
 				background-color: black;
 				padding-top: 15;
 			}
-			.guesses {
-				text-align: left;
-				border: white 2px solid;
-				width: 70%;
-				height: 30;
-				padding: 10;
-				margin: 10;
-				background-color: #1d1d1d;
-				overflow: hidden;
-				font-size: 25;
-				vertical-align: middle;
-			}
-
-			#play_controls {
-				width: 50%;
-				height: 100;
-				padding: 10;
-				vertical-align: middle;
-			}
-			
-			#play_progress {
-				width: 70%;
-				height: 10;
-				background-color: #424242;
-				border: white 2px solid;
-				text-align: left;
-				padding-left: 10;
-				padding-right: 10;
-				padding-top: 5;
-				padding-bottom: 10;
-			}
-			#play_progress_color {
-				background-color: white;
-				height: 15;
-				width: 0%;
-			}
-
 			button {
 				font-family: "LCD Solid";
 				font-size: 30;
@@ -63,45 +26,17 @@
 				border: white 5px solid;
 				background-color: #424242;
 				padding: 10;
+				cursor: pointer;
 			}
 			button:hover {
 				background-color: #8dae00;
 			}
-
-			#searchbox_text {
-				width: 70%;
-				height: 35;
-				font-family: "LCD Solid";
-				font-size: 25;
-				padding: 5px;
-
-				color: white;
-				background-color: black;
-				border: white 1px solid;
-			}
-			.autocomplete_results {
-				font-size: 20;
-				background-color: #424242;
-				border: white 1px solid;
-				
-				width: 65%;
-				padding: 5px;
-				text-align: left;
-				cursor: pointer;
-			}
-			.autocomplete_results:hover {
-				background-color: #696969;
-			}
-
-			#results {
+			#select {
 				font-size: 50;
+				text-align: center;
 			}
-			#results_clipboard {
-				visibility: collapse;
-			}
-
-			#overplayer {
-				visibility: collapse;
+			#description {
+				font-size: 35;
 			}
 		</style>
 	</head>
@@ -109,238 +44,27 @@
 		<div id='header'>
 			Five Nights at Freddy's Heardle<hr>
 		</div>
+		<br><br><br>
+			<div id="select">
+				SELECT GAME MODE:
+				<br><br>
+				<a href='game.html?daily'><button onmouseover="hover(0)">DAILY</button></a>
+				<a href='game.html?infinite'><button onmouseover="hover(1)">INFINITE</button></a>
+				<br><br>
+				<div id="description"></div>
+			</div>
 		
-		<center>
-			<div class='guesses' id='guess0'></div>
-			<div class='guesses' id='guess1'></div>
-			<div class='guesses' id='guess2'></div>
-			<div class='guesses' id='guess3'></div>
-			<div class='guesses' id='guess4'></div>
-			<div class='guesses' id='guess5'></div>
-
-			<br>
-
-			<div id="results"></div>
-			<div id="results_clipboard">
-				<br>
-				<button onclick="copyresult()">COPY RESULT TO CLIPBOARD</button>
-			</div>
-
-			<div id='play_controls'>
-				<div id="play_progress">
-					<div id="play_progress_color"></div>
-				</div>
-				<br style="line-height:5px">
-				<button id="play_button" onclick='play_music()'>PLAY</button>
-			</div>
-
-			<br>
-
-			<div id="searchbox">
-				<input type="text" id='searchbox_text' placeholder="Search here!" autocomplete="off" onkeyup="search()">
-				<button onclick="submit()">SUBMIT</button>
-				<div id="autocomplete"></div>
-			</div>
-		</center>
 		
-		<!-- youtube player -->
-		<div id="overplayer">
-			<div id="player"></div>
-			<script src="youtubecode.js"></script>
-		</div>
 
 		<!-- scripts -->
 		<script src="basicfunctions.js"></script>
-		<script src="songlist.js"></script>
 		<script>
-			//"the basics" --------------------------------------------------------
-			guess = 0;
-			guess_history = ["", "", "", "", "", ""];
-			lengths = [1, 2, 5, 7, 10, 15, 9999];
-			win = 0;
-
-			first_day = new Date("12/21/2024");
-			current_day = new Date();
-			difference_in_time = current_day.getTime() - first_day.getTime();
-			difference_in_days = Math.floor(difference_in_time / (1000 * 3600 * 24)) + 1;
-			document.getElementById('header').innerHTML = "Five Nights at Freddy's Heardle (#" + difference_in_days + ")";
-
-			//playing the music --------------------------------------------------------
-			playing_music = 0;
-            function play_music(){
-				if(ready && playing_music==0){
-					player.playVideo();
-					playing_music = 1;
-					playing();
-					curr_timeout = setTimeout(stopVideo, lengths[guess]*1000);
-				}
-            }
-            function playing(){
-                if(playing_music==0){
-					document.getElementById('play_progress').style.backgroundColor = '#424242';
-					document.getElementById('play_progress_color').style.width = 0;
-                }else{
-					playing_music ++;
-					document.getElementById('play_progress').style.backgroundColor = '#8dae00';
-					document.getElementById('play_progress_color').style.width = ((playing_music*0.001)*6.25) + '%';
-					setTimeout(playing, 1);
-				}
-            }
-
-			//choosing today's song --------------------------------------------------------
-			Math.seedrandom(difference_in_days);
-			today_song = rng(1, songs.length-1);
-
-			//search autocomplete --------------------------------------------------------
-			just_titles = [];
-			for(i=0; i<songs.length; i++){
-				just_titles[i] = songs[i][0];
-			}
-			function search() {
-				//filtering results by the input
-				var results = [];
-				var input = document.getElementById('searchbox_text').value;
-				if(input.length > 0){
-					results = just_titles.filter((keyword)=>{
-						return keyword.toLowerCase().includes(input.toLowerCase());
-					});
-				}
-				//showing the results
-				to_add = "";
-				for(i=0; i<clamp(results.length, 0, 10); i++){
-					to_add += '<div class="autocomplete_results" onclick=';
-
-					var temp = '"autofill(';
-					temp += "'" + results[i] + "'"
-					temp += ')"';
-
-					to_add += temp;
-					to_add += '>'
-					to_add += results[i];
-					to_add += '</div>';
-				}
-				document.getElementById('autocomplete').innerHTML = to_add;
-			}
-			function autofill(whattowrite) {
-				document.getElementById('searchbox_text').value = whattowrite;
-				document.getElementById('autocomplete').innerHTML = "";
-			}
-			//fixing apostrophe (sorry..)
-			function check_for_apostrophe(){
-				var input = document.getElementById('searchbox_text').value;
-				for(i=0; i<input.length; i++){
-					if(input.charAt(i)=="'"){
-						document.getElementById('searchbox_text').value = input.substring(0, i) + '＇' + input.substring(i+1, input.length)
-					}
-				}
-				setTimeout(check_for_apostrophe, 5);
-			}
-			check_for_apostrophe();
-
-			//submitting --------------------------------------------------------
-			function submit() {
-				submitted = document.getElementById('searchbox_text').value;
-				submitted_val = -1;
-				for(i=0; i<songs.length; i++){
-					if(submitted.toLowerCase() == just_titles[i].toLowerCase()){
-						submitted_val = i;
-						i = songs.length;
-					}
-				}
-				if(submitted_val != -1 && win == 0 && submitted != ""){
-					play_sfx(0);
-
-					guess_history[guess] = submitted_val;
-					update_guess_history();
-					document.getElementById('searchbox_text').value = "";
-					search();
-
-					if(submitted_val == today_song){
-						//correct guess
-						win_loop();
-					}else{
-						//wrong guess
-						guess ++;
-						if(guess>=6){
-							lose_loop();
-						}
-					}
-				}else{
-					play_sfx(1);
-				}
-			}
-			function update_guess_history() {
-				for(i=0; i<6; i++){
-					if(guess_history[i]==""){
-						document.getElementById('guess'+i).innerHTML = "";
-						document.getElementById('guess'+i).style.backgroundColor = '#1d1d1d';
-					}else{
-						document.getElementById('guess'+i).innerHTML = just_titles[guess_history[i]];
-						document.getElementById('guess'+i).style.backgroundColor = '#731717';
-						if(guess_history[i]==today_song){
-							document.getElementById('guess'+i).style.backgroundColor = '#8dae00';
-						}
-					}
-				}
-			}
-
-			function win_loop() {
-				win = 1;
-				document.getElementById('play_controls').innerHTML = "";
-				document.getElementById('searchbox').innerHTML = "";
-				document.getElementById('results').innerHTML = "You got it!<br><br>The song was:<br>"+just_titles[today_song];
-				document.getElementById('results_clipboard').style.visibility = 'visible';
-
-				clearTimeout(curr_timeout);
-				player.playVideo();
-			}
-			function lose_loop() {
-				win = -1;
-				document.getElementById('play_controls').innerHTML = "";
-				document.getElementById('searchbox').innerHTML = "";
-				document.getElementById('results').innerHTML = "Better luck next time!<br><br>The song was:<br>"+just_titles[today_song];
-				document.getElementById('results_clipboard').style.visibility = 'visible';
-
-				clearTimeout(curr_timeout);
-				player.playVideo();
-			}
-			function copyresult() {
-				var result = "Five Nights at Freddy's Heardle #";
-				result += difference_in_days;
-				result += "\n\n";
-				result += "🐻";
-
-				var squares = "";
-				add_white = 0;
-				for(i=0; i<6; i++){
-					if(guess_history[i] == today_song){
-						squares += "🟩";
-						add_white = 5-i;
-						i = 6;
-					}else{
-						squares += "🟥";
-					}
-				}
-				while(add_white>0){
-					squares += '⬜';
-					add_white --;
-				}
-
-				result += squares;
-				result += "\n\n";
-				result += window.location.href;
-
-				navigator.clipboard.writeText(result);
-				play_sfx(0);
-			}
-			
-			function play_sfx(sfx){
-				if(sfx==0){
-					var audio = new Audio( 'assets/blip3.wav' );
-				}else if(sfx==1){
-					var audio = new Audio( 'assets/error.wav' );
-				}
-                audio.play();
+			function hover(which){
+				descriptions = [
+					"Guess today's song in 6 guesses or less!",
+					"Guess as many songs as you can!"
+				];
+				document.getElementById('description').innerHTML = descriptions[which];
 			}
 		</script>
 	</body>
