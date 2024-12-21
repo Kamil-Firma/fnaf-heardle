@@ -122,26 +122,26 @@
 			<div class='guesses' id='guess4'></div>
 			<div class='guesses' id='guess5'></div>
 
-			<div id="results"></div>
-			<div id="results_clipboard">
-				<br>
-				<button onclick="copyresult()">COPY RESULT TO CLIPBOARD</button>
-			</div>
-
 			<div id='play_controls'>
-				<div id="play_progress">
-					<div id="play_progress_color"></div>
+				<div id="play_progress_outer">
+					<div id="play_progress">
+						<div id="play_progress_color"></div>
+					</div>
+					<br style="line-height:5px">
 				</div>
-				<br style="line-height:5px">
 				<button id="play_button" onclick='play_music()'>PLAY</button>
 			</div>
-
-			<br>
 
 			<div id="searchbox">
 				<input type="text" id='searchbox_text' placeholder="Search here!" autocomplete="off" onkeyup="search()">
 				<button onclick="submit()">SUBMIT</button>
 				<div id="autocomplete"></div>
+			</div>
+
+			<div id="results"></div>
+			<div id="results_clipboard">
+				<br>
+				<button onclick="copyresult()">COPY RESULT TO CLIPBOARD</button>
 			</div>
 		</center>
 		
@@ -312,7 +312,7 @@
 
 			function win_loop() {
 				win = 1;
-				document.getElementById('play_controls').innerHTML = "";
+				document.getElementById('play_progress_outer').innerHTML = "";
 				document.getElementById('searchbox').innerHTML = "";
 				document.getElementById('results').innerHTML = "You got it!<br><br><small>The song was:<br>"+just_titles[today_song]+"</small>";
 				document.getElementById('results_clipboard').style.visibility = 'visible';
@@ -322,7 +322,7 @@
 			}
 			function lose_loop() {
 				win = -1;
-				document.getElementById('play_controls').innerHTML = "";
+				document.getElementById('play_progress_outer').innerHTML = "";
 				document.getElementById('searchbox').innerHTML = "";
 				document.getElementById('results').innerHTML = "Better luck next time!<br><br><small>The song was:<br>"+just_titles[today_song]+"</small>";
 				document.getElementById('results_clipboard').style.visibility = 'visible';
