@@ -162,7 +162,7 @@
 			first_day = new Date("12/21/2024");
 			current_day = new Date();
 			difference_in_time = current_day.getTime() - first_day.getTime();
-			difference_in_days = Math.round(difference_in_time / (1000 * 3600 * 24)) + 1;
+			difference_in_days = Math.floor(difference_in_time / (1000 * 3600 * 24)) + 1;
 			document.getElementById('header').innerHTML = "Five Nights at Freddy's Heardle (#" + difference_in_days + ")";
 
 			//playing the music --------------------------------------------------------
@@ -315,18 +315,15 @@
 				for(i=0; i<6; i++){
 					if(guess_history[i] == today_song){
 						squares += "🟩";
-						add_white = 4-i;
-						i = 5;
-						console.log('green');
+						add_white = 5-i;
+						i = 6;
 					}else{
 						squares += "🟥";
-						console.log('red');
 					}
 				}
 				while(add_white>0){
 					squares += '⬜';
 					add_white --;
-					console.log('white');
 				}
 
 				result += squares;
