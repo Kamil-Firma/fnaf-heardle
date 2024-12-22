@@ -284,13 +284,19 @@
 				result += "🎧";
 
 				var squares = "";
+				white_squares = 0;
 				for(i=guess_max; i>0; i--){
 					if(guess >= i){
                         squares += '🟩';
+						white_squares = i-1;
                         i = 0;
                     }else{
                         squares += '🟥';
                     }
+				}
+				while(white_squares>0){
+					squares += '⬜';
+					white_squares --;
 				}
 
 				result += squares;
