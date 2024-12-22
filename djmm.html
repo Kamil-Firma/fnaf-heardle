@@ -56,9 +56,9 @@
 				background-color: #8dae00;
 			}
 
-			input {
-				width: 15%;
-				height: 35;
+			.guesses {
+				width: 75;
+				height: 75;
 				font-family: "LCD Solid";
 				font-size: 25;
 				padding: 5px;
@@ -66,6 +66,9 @@
 				color: white;
 				background-color: black;
 				border: white 1px solid;
+
+				text-align: center;
+				vertical-align: middle;
 			}
 
             #selection {
@@ -74,6 +77,17 @@
                 padding: 20;
                 border: white 2px solid;
             }
+			table {
+				border-collapse: collapse;
+			}
+			td {
+				width: 75;
+				height: 65;
+                border: white 2px solid;
+				text-align: center;
+				vertical-align: middle;
+				font-size: 20;
+			}
 
 			#results {
 				font-size: 50;
@@ -100,10 +114,6 @@
         </div>
 
 		<center>
-            <div id="guesses" style="font-size: 35">
-                4 GUESSES LEFT
-            </div>
-            
 			<div id='play_controls'>
 				<div id="play_progress_outer">
 					<div id="play_progress">
@@ -117,14 +127,16 @@
             <br>
             <div id='selection_outer'>
                 <div id="selection">
-                    LEAD: <input type="number" id="select_0" min="0" max="4" value="0">
-                    <br>
-                    CHORD:<input type="number" id="select_1" min="0" max="4" value="0">
-                    <br>
-                    BASS: <input type="number" id="select_2" min="0" max="4" value="0">
-                    <br>
-                    DRUM: <input type="number" id="select_3" min="0" max="4" value="0">
-                    <br>
+					<div id="selection_table">
+						<table>
+							<tr>
+								<td>LEAD</td>
+								<td>CHORD</td>
+								<td>BASS</td>
+								<td>DRUM</td>
+							</tr>
+						</table>
+					</div>
                     <small>(0 means it isn't playing)</small>
                     <br><br>
                     <button onclick="submit()">SUBMIT</button>
@@ -144,7 +156,7 @@
 			//"the basics" --------------------------------------------------------
 			win = 0;
 
-			first_day = new Date("12/22/2024");
+			first_day = new Date("12/23/2024");
 			current_day = new Date();
 			difference_in_time = current_day.getTime() - first_day.getTime();
 			difference_in_days = Math.floor(difference_in_time / (1000 * 3600 * 24)) + 1;
@@ -174,15 +186,13 @@
                 'bass',
                 'drum'
             ];
-
+			
             Math.seedrandom(difference_in_days);
-
             ruin = rng(0, 1);
             ruin_names = [
                 'base_',
                 'ruin_'
             ]
-
 			today = [
                 rng(0, 4),
                 rng(0, 4),
@@ -219,36 +229,103 @@
                 playing_music = 0;
             }
 
-            
 			//submitting --------------------------------------------------------
-            guess_max = 4;
-            guess = guess_max;
-			function submit() {
-				submitted = [
-                    document.getElementById('select_0').value,
-                    document.getElementById('select_1').value,
-                    document.getElementById('select_2').value,
-                    document.getElementById('select_3').value,
-                ];
-				
-				if(win == 0){
-					if(
-                        submitted[0] == today[0] &&
-                        submitted[1] == today[1] &&
-                        submitted[2] == today[2] &&
-                        submitted[3] == today[3]
-                    ){
-						//correct guess
-					    play_sfx(0);
-						endgame(1);
-					}else{
-						//wrong guess
-						guess --;
-                        document.getElementById('guesses').innerHTML = guess + " GUESSES LEFT";
-                        play_sfx(1);
-						if(guess<=0){
-							endgame(0);
+            guess_max = 3;
+            guess = 0;
+			guess_history = [
+				[-1, -1, -1, -1],
+				[-1, -1, -1, -1],
+				[-1, -1, -1, -1],
+				[-1, -1, -1, -1],
+				[-1, -1, -1, -1],
+				[-1, -1, -1, -1],
+			];
+
+			function refresh_table() {
+				towrite = "<table>";
+				towrite += "<tr>";
+				for(i=0; i<4; i++){
+					towrite += "<td>";
+					towrite += layer_names[i].toUpperCase();
+					towrite += "</td>";
+				}
+				towrite += "</tr>";
+
+				for(column=0; column<guess_max; column++){
+					towrite += "<tr>";
+					for(row=0; row<4; row++){
+						var newval = guess_history[column][row];
+
+						if(column == guess){
+							towrite += "<td style='background-color:#17172a;'>";
+						}else if(newval == -1){
+							towrite += "<td>";
+						}else if(newval != today[row]){
+							towrite += "<td style='background-color:#993d3d;'>";
+						}else if(newval == today[row]){
+							towrite += "<td style='background-color:#50924e;'>";
 						}
+
+						if(newval != -1){
+							towrite += newval;
+						}
+						towrite += "</td>";
+					}
+					towrite += "</tr>";
+				}
+
+				document.getElementById('selection_table').innerHTML = towrite;
+			}
+			refresh_table();
+
+			//typing ------------------------
+			how_many_typed = 0;
+			document.addEventListener('keydown', function keyboardcheck(event){
+                if(event.keyCode == 48 || event.keyCode == 96){ //0
+                    type(0);
+                }else if(event.keyCode == 49 || event.keyCode == 97){ //1
+                    type(1);
+                }else if(event.keyCode == 50 || event.keyCode == 98){ //2
+                    type(2);
+                }else if(event.keyCode == 51 || event.keyCode == 99){ //3
+                    type(3);
+                }else if(event.keyCode == 52 || event.keyCode == 100){ //4
+                    type(4);
+                }else if(event.keyCode == 8){ //backspace
+                    guess_history[guess][how_many_typed-1] = -1;
+					if(how_many_typed>0){
+						how_many_typed --;
+					}
+					refresh_table();
+                }
+            }, true);
+			function type(num){
+				if(guess<6){
+					guess_history[guess][how_many_typed] = num;
+					if(how_many_typed<4){
+						how_many_typed ++;
+					}
+					refresh_table();
+				}
+			}
+
+			function submit() {
+				if(win == 0){
+					how_many_typed = 0;
+					submitted = guess_history[guess];
+					for(i=0;i<4;i++){
+						if(submitted[i] == -1){
+							submitted[i] = 0;
+						}
+					}
+					guess ++;
+					refresh_table();
+					play_sfx(0);
+
+					if( submitted[0] == today[0] && submitted[1] == today[1] && submitted[2] == today[2] && submitted[3] == today[3] ){
+						endgame(1);
+					}else if(guess>=guess_max){
+						endgame(0);
 					}
 				}
 			}
@@ -256,18 +333,17 @@
 			function endgame(if_win) {
                 if(if_win){
 				    win = 1;
-                    var towrite = "";
-                    if(guess_max-guess == 0){
-                        towrite = "Great job!<br>You got it on the first guess.";
-                    }else{
-                        towrite = "Great job!<br>You got it in " + (guess_max-guess+1) + " guesses.";
+					var towrite = "Great job!<br><br><small>The combination was:<br>";
+                    for(i=0; i<4; i++){
+                        towrite += layer_names[i].toUpperCase() + ": " + today[i] + "<br>";
                     }
+                    towrite += "</small>";
                     document.getElementById('results').innerHTML = towrite;
                 }else{
                     win = -1;
                     var towrite = "Better luck next time!<br><br><small>The combination was:<br>";
                     for(i=0; i<4; i++){
-                        towrite += layer_names[i] + ": " + today[i] + "<br>";
+                        towrite += layer_names[i].toUpperCase() + ": " + today[i] + "<br>";
                     }
                     towrite += "</small>";
                     document.getElementById('results').innerHTML = towrite;
@@ -281,26 +357,35 @@
 				var result = "DJMM Heardle #";
 				result += difference_in_days;
 				result += "\n\n";
-				result += "🎧";
 
-				var squares = "";
-				white_squares = 0;
-				for(i=guess_max; i>0; i--){
-					if(guess >= i){
-                        squares += '🟩';
-						white_squares = i-1;
-                        i = 0;
-                    }else{
-                        squares += '🟥';
-                    }
+				/*
+				if(column == guess){
+					towrite += "<td style='background-color:#17172a;'>";
+				}else if(newval == -1){
+					towrite += "<td>";
+				}else if(newval != today[row]){
+					towrite += "<td style='background-color:#993d3d;'>";
+				}else if(newval == today[row]){
+					towrite += "<td style='background-color:#50924e;'>";
 				}
-				while(white_squares>0){
-					squares += '⬜';
-					white_squares --;
+				*/
+
+				for(column=0; column<guess_max; column++){
+					var this_row = "";
+					for(row=0; row<4; row++){
+						var newval = guess_history[column][row];
+						if(newval == today[row]){
+							this_row += '🟩';
+						}else if(newval != today[row] && newval != -1){
+							this_row += '🟥';
+						}
+					}
+					if(this_row != ""){
+						result += this_row + "\n";
+					}
 				}
 
-				result += squares;
-				result += "\n\n";
+				result += "\n";
 				result += window.location.href;
 
 				navigator.clipboard.writeText(result);
