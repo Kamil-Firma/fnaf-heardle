@@ -8,7 +8,7 @@
 			body {
 				font-family: "LCD Solid";
 				background-color: black;
-				background-image: url('assets/officebg.png');
+				background-image: url('assets/bg_fnaf1.png');
 				background-attachment: fixed;
 				font-size: 30;
 				color: white;
@@ -50,19 +50,19 @@
 				<br><br>
 				<a href='game?daily'><button onmouseover="hover(0)">DAILY</button></a>
 				<a href='game?infinite'><button onmouseover="hover(1)">INFINITE</button></a>
+				<a href='djmm'><button onmouseover="hover(2)">DJMM</button></a>
 				<br><br>
 				<div id="description"></div>
 			</div>
 		
-		
-
 		<!-- scripts -->
 		<script src="basicfunctions.js"></script>
 		<script>
 			function hover(which){
 				descriptions = [
 					"Guess today's song in 6 guesses or less!",
-					"Guess as many songs as you can!"
+					"Guess as many songs as you can!",
+					"<small>(Difficult)</small><br>Play DJ Music Time! Guess today's combination."
 				];
 				document.getElementById('description').innerHTML = descriptions[which];
 			}

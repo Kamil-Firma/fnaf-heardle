@@ -1,0 +1,305 @@
+<html>
+	<head>
+		<title>Five Nights at Freddy's Heardle</title>
+		<link rel="icon" href="assets/freddy.png">
+		<style>
+			@font-face { font-family: 'LCD Solid'; src: url('assets/LcdSolid.ttf'); } 
+
+			body {
+				font-family: "LCD Solid";
+				background-color: black;
+				background-image: url('assets/bg_djmm.png');
+				background-attachment: fixed;
+				font-size: 30;
+				color: white;
+			}
+			#header {
+				text-align: center;
+				font-size: 40;
+				background-color: black;
+				padding-top: 15;
+			}
+
+			#play_controls {
+				width: 50%;
+				height: 100;
+				padding: 10;
+				vertical-align: middle;
+			}
+			
+			#play_progress {
+				width: 70%;
+				height: 10;
+				background-color: #424242;
+				border: white 2px solid;
+				text-align: left;
+				padding-left: 10;
+				padding-right: 10;
+				padding-top: 5;
+				padding-bottom: 10;
+			}
+			#play_progress_color {
+				background-color: white;
+				height: 15;
+				width: 0%;
+			}
+
+			button {
+				font-family: "LCD Solid";
+				font-size: 30;
+				color: white;
+				border: white 5px solid;
+				background-color: #424242;
+				padding: 10;
+			}
+			button:hover {
+				background-color: #8dae00;
+			}
+
+			input {
+				width: 15%;
+				height: 35;
+				font-family: "LCD Solid";
+				font-size: 25;
+				padding: 5px;
+
+				color: white;
+				background-color: black;
+				border: white 1px solid;
+			}
+
+            #selection {
+                background-color: black;
+                width: 25%;
+                padding: 20;
+                border: white 2px solid;
+            }
+
+			#results {
+				font-size: 50;
+			}
+			#results_clipboard {
+				visibility: collapse;
+			}
+		</style>
+	</head>
+	<body>
+		<div id='header'>
+			<div id="headertext">
+				DJMM Heardle
+			</div>
+			<a href='index' style="position:absolute; top:10; right:50;"><button>BACK TO MAIN MENU</button></a>
+			<hr>
+		</div>
+		
+        <div id="music_layers">
+            <audio src="assets/djmm/base_lead1.ogg" id="mus_lead"></audio>
+            <audio src="assets/djmm/base_chord1.ogg" id="mus_chord"></audio>
+            <audio src="assets/djmm/base_bass1.ogg" id="mus_bass"></audio>
+            <audio src="assets/djmm/base_drum1.ogg" id="mus_drum"></audio>
+        </div>
+
+		<center>
+            <div id="guesses" style="font-size: 35">
+                4 GUESSES LEFT
+            </div>
+            
+			<div id='play_controls'>
+				<div id="play_progress_outer">
+					<div id="play_progress">
+						<div id="play_progress_color"></div>
+					</div>
+					<br style="line-height:5px">
+				</div>
+				<button id="play_button" onclick='play_music()'>PLAY</button>
+			</div>
+
+            <br>
+            <div id='selection_outer'>
+                <div id="selection">
+                    LEAD: <input type="number" id="select_0" min="0" max="4" value="0">
+                    <br>
+                    CHORD:<input type="number" id="select_1" min="0" max="4" value="0">
+                    <br>
+                    BASS: <input type="number" id="select_2" min="0" max="4" value="0">
+                    <br>
+                    DRUM: <input type="number" id="select_3" min="0" max="4" value="0">
+                    <br>
+                    <small>(0 means it isn't playing)</small>
+                    <br><br>
+                    <button onclick="submit()">SUBMIT</button>
+                </div>
+            </div>
+
+			<div id="results"></div>
+			<div id="results_clipboard">
+				<br>
+				<button onclick="copyresult()">COPY RESULT TO CLIPBOARD</button>
+			</div>
+		</center>
+
+		<!-- scripts -->
+		<script src="basicfunctions.js"></script>
+		<script>
+			//"the basics" --------------------------------------------------------
+			win = 0;
+
+			first_day = new Date("12/22/2024");
+			current_day = new Date();
+			difference_in_time = current_day.getTime() - first_day.getTime();
+			difference_in_days = Math.floor(difference_in_time / (1000 * 3600 * 24)) + 1;
+
+            document.getElementById('headertext').innerHTML = "DJMM Heardle (#" + difference_in_days + ")";
+
+			//sfx
+			function play_sfx(sfx){
+				if(sfx==0){
+					var audio = new Audio( 'assets/blip3.wav' );
+				}else if(sfx==1){
+					var audio = new Audio( 'assets/error.wav' );
+				}
+                audio.play();
+			}
+
+            //todays djmm
+            layers = [
+                document.getElementById('mus_lead'),
+                document.getElementById('mus_chord'),
+                document.getElementById('mus_bass'),
+                document.getElementById('mus_drum')
+            ];
+            layer_names = [
+                'lead',
+                'chord',
+                'bass',
+                'drum'
+            ];
+
+            Math.seedrandom(difference_in_days);
+
+            ruin = rng(0, 1);
+            ruin_names = [
+                'base_',
+                'ruin_'
+            ]
+
+			today = [
+                rng(0, 4),
+                rng(0, 4),
+                rng(0, 4),
+                rng(0, 4),
+            ];
+            for(i=0; i<4; i++){
+                layers[i].src = 'assets/djmm/' + ruin_names[ruin] + layer_names[i] + today[i] + '.ogg';
+            }
+
+			//playing the music --------------------------------------------------------
+			playing_music = 0;
+            curr_timeout = 0;
+            function play_music(){
+                for(i=0; i<4; i++){
+				    layers[i].play();
+                }
+                playing_music = 1;
+                playing();
+                curr_timeout = setTimeout(stop_playing, 8000);
+            }
+            function playing(){
+                if(playing_music==0){
+					document.getElementById('play_progress').style.backgroundColor = '#424242';
+					document.getElementById('play_progress_color').style.width = 0;
+                }else{
+					playing_music ++;
+					document.getElementById('play_progress').style.backgroundColor = '#8dae00';
+					document.getElementById('play_progress_color').style.width = (playing_music/17) + '%';
+					setTimeout(playing, 1);
+				}
+            }
+            function stop_playing(){
+                playing_music = 0;
+            }
+
+            
+			//submitting --------------------------------------------------------
+            guess_max = 4;
+            guess = guess_max;
+			function submit() {
+				submitted = [
+                    document.getElementById('select_0').value,
+                    document.getElementById('select_1').value,
+                    document.getElementById('select_2').value,
+                    document.getElementById('select_3').value,
+                ];
+				
+				if(win == 0){
+					if(
+                        submitted[0] == today[0] &&
+                        submitted[1] == today[1] &&
+                        submitted[2] == today[2] &&
+                        submitted[3] == today[3]
+                    ){
+						//correct guess
+					    play_sfx(0);
+						endgame(1);
+					}else{
+						//wrong guess
+						guess --;
+                        document.getElementById('guesses').innerHTML = guess + " GUESSES LEFT";
+                        play_sfx(1);
+						if(guess<=0){
+							endgame(0);
+						}
+					}
+				}
+			}
+
+			function endgame(if_win) {
+                if(if_win){
+				    win = 1;
+                    var towrite = "";
+                    if(guess_max-guess == 0){
+                        towrite = "Great job!<br>You got it on the first guess.";
+                    }else{
+                        towrite = "Great job!<br>You got it in " + (guess_max-guess+1) + " guesses.";
+                    }
+                    document.getElementById('results').innerHTML = towrite;
+                }else{
+                    win = -1;
+                    var towrite = "Better luck next time!<br><br><small>The combination was:<br>";
+                    for(i=0; i<4; i++){
+                        towrite += layer_names[i] + ": " + today[i] + "<br>";
+                    }
+                    towrite += "</small>";
+                    document.getElementById('results').innerHTML = towrite;
+                }
+
+				document.getElementById('selection_outer').innerHTML = "";
+				document.getElementById('results_clipboard').style.visibility = 'visible';
+			}
+
+			function copyresult() {
+				var result = "DJMM Heardle #";
+				result += difference_in_days;
+				result += "\n\n";
+				result += "🎧";
+
+				var squares = "";
+				for(i=guess_max; i>0; i--){
+					if(guess >= i){
+                        squares += '🟩';
+                        i = 0;
+                    }else{
+                        squares += '🟥';
+                    }
+				}
+
+				result += squares;
+				result += "\n\n";
+				result += window.location.href;
+
+				navigator.clipboard.writeText(result);
+				play_sfx(0);
+			}
+		</script>
+	</body>
+</html>

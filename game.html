@@ -8,7 +8,7 @@
 			body {
 				font-family: "LCD Solid";
 				background-color: black;
-				background-image: url('assets/officebg.png');
+				background-image: url('assets/bg_fnaf1.png');
 				background-attachment: fixed;
 				font-size: 30;
 				color: white;
@@ -156,14 +156,6 @@
 		<script src="songlist.js"></script>
 		<script>
 			//"the basics" --------------------------------------------------------
-			mode = 0;
-			if(window.location.search == '?daily'){
-				mode = 0;
-			}else if(window.location.search == '?infinite'){
-				mode = 1;
-				document.body.style.backgroundImage = "url('assets/office2bg.png')";
-			}
-
 			guess = 0;
 			guess_history = ["", "", "", "", "", ""];
 			lengths = [1, 2, 5, 7, 10, 15, 9999];
@@ -173,9 +165,13 @@
 			current_day = new Date();
 			difference_in_time = current_day.getTime() - first_day.getTime();
 			difference_in_days = Math.floor(difference_in_time / (1000 * 3600 * 24)) + 1;
-			if(mode == 0){
-				document.getElementById('headertext').innerHTML = "Five Nights at Freddy's Heardle (#" + difference_in_days + ")";
-			}else{
+
+			mode = 0;
+			document.getElementById('headertext').innerHTML = "Five Nights at Freddy's Heardle (#" + difference_in_days + ")";
+			
+			if(window.location.search == '?infinite'){
+				mode = 1;
+				document.body.style.backgroundImage = "url('assets/bg_sl.png')";
 				document.getElementById('headertext').innerHTML = "Five Nights at Freddy's Heardle (Infinite)";
 			}
 
