@@ -1,0 +1,79 @@
+<html>
+	<head>
+		<title>Five Nights at Freddy's Heardle</title>
+		<link rel="icon" href="../assets/freddy.png">
+		<style>
+			@font-face { font-family: 'LCD Solid'; src: url('../assets/LcdSolid.ttf'); } 
+
+			body {
+				font-family: "LCD Solid";
+				background-color: black;
+				background-image: url('../assets/bg_fnaf1.png');
+				background-attachment: fixed;
+				font-size: 30;
+				color: white;
+			}
+		</style>
+	</head>
+	<body>
+		<center>
+			<br style="line-height:350px;">
+			<div id="answer"></div>
+		</center>
+
+		<!-- scripts -->
+		<script src="../basicfunctions.js"></script>
+		<script src="../songlist.js"></script>
+		<script>
+			TO_CHECK = "I Wanna Be Down - Five Nights at Freddy＇s (Movie)";
+
+			//"the basics" --------------------------------------------------------
+			guess = 0;
+			guess_history = ["", "", "", "", "", ""];
+			lengths = [1, 2, 5, 7, 10, 15, 9999];
+			win = 0;
+
+			function check_day(day){
+				first_day = new Date("12/21/2024");
+				current_day = new Date(day);
+				difference_in_time = current_day.getTime() - first_day.getTime();
+				difference_in_days = Math.floor(difference_in_time / (1000 * 3600 * 24)) + 1;
+				
+				//choosing today's song --------------------------------------------------------
+				Math.seedrandom(difference_in_days);
+				today_song = rng(1, songs.length-1);
+
+				return songs[today_song][0];
+			}
+
+			when = 0;
+			month = 12;
+			day = 21;
+			year = 2024;
+
+			for(i=0; i<99999; i++){
+				var curday = month + "/" + day + "/" + year;
+				console.log('trying: ' + curday);
+				
+				if(check_day(curday) == TO_CHECK){
+					document.getElementById('answer').innerHTML = TO_CHECK + "<br><br>will be on the<br><br>" + curday;
+					when = 1;
+					console.log('its on the ' + curday);
+					i = 99999999999999;
+				}else{
+					console.log('not it.');
+					day++
+					if(day>31){
+						day = 1;
+						month ++;
+					}
+					if(month>12){
+						month = 1;
+						day = 1;
+						year ++;
+					}
+				}
+			}
+		</script>
+	</body>
+</html>
