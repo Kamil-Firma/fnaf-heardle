@@ -207,12 +207,14 @@
 			playing_music = 0;
             curr_timeout = 0;
             function play_music(){
-                for(i=0; i<4; i++){
-				    layers[i].play();
-                }
-                playing_music = 1;
-                playing();
-                curr_timeout = setTimeout(stop_playing, 8000);
+				if(playing_music==0){
+					for(i=0; i<4; i++){
+						layers[i].play();
+					}
+					playing_music = 1;
+					playing();
+					curr_timeout = setTimeout(stop_playing, 8005);
+				}
             }
             function playing(){
                 if(playing_music==0){
