@@ -415,7 +415,7 @@ songs = [
 
 function get_day(){
     var GETfirst_day = new Date("12/21/2024");
-    var GETcurrent_day = new Date("");
+    var GETcurrent_day = new Date();
     var GETdifference_in_time = GETcurrent_day.getTime() - GETfirst_day.getTime();
     return Math.floor(GETdifference_in_time / (1000 * 3600 * 24)) + 1;
 }
