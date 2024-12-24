@@ -1,0 +1,104 @@
+<html>
+	<head>
+		<title>Five Nights at Freddy's Heardle</title>
+		<link rel="icon" href="../assets/freddy.png">
+		<style>
+			@font-face { font-family: 'LCD Solid'; src: url('../assets/LcdSolid.ttf'); } 
+
+			body {
+				font-family: "LCD Solid";
+				background-color: black;
+				background-image: url('../assets/bg_fnaf1.png');
+				background-attachment: fixed;
+				font-size: 30;
+				color: white;
+			}
+		</style>
+	</head>
+	<body>
+        <div id="answer"></div>
+
+		<!-- scripts -->
+		<script src="../basicfunctions.js"></script>
+		<script src="../songlist.js"></script>
+		<script>
+			howmanydays = 90000;
+			//"the basics" --------------------------------------------------------
+			guess = 0;
+			guess_history = ["", "", "", "", "", ""];
+			lengths = [1, 2, 5, 7, 10, 15, 9999];
+			win = 0;
+
+			function check_day(day){
+				first_day = new Date("12/21/2024");
+				current_day = new Date(day);
+				difference_in_time = current_day.getTime() - first_day.getTime();
+				difference_in_days = Math.floor(difference_in_time / (1000 * 3600 * 24)) + 1;
+				
+				//choosing today's song --------------------------------------------------------
+				Math.seedrandom(difference_in_days);
+				today_song = rng(1, songs.length-1);
+
+				return today_song;
+			}
+
+			when = 0;
+			month = 12;
+			day = 21;
+			year = 2024;
+
+			cur_name = "";
+			cur_day = "12/20/2024";
+			last_name = "";
+			last_day = "12/21/2024";
+
+			combo_length = 0;
+			did_combo = 0;
+
+            to_write = "";
+            for(i=1; i<=howmanydays; i++){
+				last_day = cur_day;
+                cur_day = month + "/" + day + "/" + year;
+
+				last_name = cur_name;
+				cur_name = check_day(cur_day);
+
+				if(cur_name == last_name){
+					did_combo = 1;
+					if(combo_length == 0){
+						to_write += last_day + " | " + songs[last_name][0];
+						to_write += "<br>";
+						to_write += cur_day + " | " + songs[cur_name][0];
+						to_write += "<br>";
+
+						combo_length = 2;
+					}else{
+						combo_length ++;
+						to_write += 'COMBO x'+combo_length+"<br>";
+						to_write += cur_day + " | " + songs[cur_name][0];
+						to_write += "<br>";
+					}
+				}else{
+					if(did_combo == 1){
+						did_combo = 0;
+						combo_length = 0;
+						to_write += "<hr>";
+					}
+				}
+
+                day++
+                if(day>31){
+                    day = 1;
+                    month ++;
+                }
+                if(month>12){
+                    month = 1;
+                    day = 1;
+                    year ++;
+                }
+            }
+
+            document.getElementById('answer').innerHTML = to_write;
+		</script>
+	</body>
+</html>

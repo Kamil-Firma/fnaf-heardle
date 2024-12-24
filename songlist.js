@@ -106,15 +106,15 @@ songs = [
     ['Bonnie Nightmare Clash - Five Nights at Freddy＇s: Help Wanted', 'AbuC1ooOLkw'],
 
     //special delivery
-    ['Dangerous Thoughts - Five Nights at Freddy＇s: Special Delivery', 'hBeJXQlF22M'],
-    ['Dark Circus: Encore! (Unused) - Five Nights at Freddy＇s: Special Delivery', 'RwHTx_s2Ddg'],
-    ['Mangle Teaser Video Music - Five Nights at Freddy＇s: Special Delivery', 'Q2IpypM4JtY'],
-    ['The Sound of Falling (Unused) - Five Nights at Freddy＇s: Special Delivery', 'CdGqLyk9RbM'],
+    ['Dangerous Thoughts - Five Nights at Freddy＇s AR: Special Delivery', 'hBeJXQlF22M'],
+    ['Dark Circus: Encore! (Unused) - Five Nights at Freddy＇s AR: Special Delivery', 'RwHTx_s2Ddg'],
+    ['Mangle Teaser Video Music - Five Nights at Freddy＇s AR: Special Delivery', 'Q2IpypM4JtY'],
+    ['The Sound of Falling (Unused) - Five Nights at Freddy＇s AR: Special Delivery', 'CdGqLyk9RbM'],
         //maybe stock tracks
-    ['Game Intro / "Lucky" - Five Nights at Freddy＇s: Special Delivery', 'yhYy8YBZ0iI'],
-    ['Inbox - Five Nights at Freddy＇s: Special Delivery', 'LtjKol5_5mE'],
+    ['Game Intro / "Lucky" - Five Nights at Freddy＇s AR: Special Delivery', 'yhYy8YBZ0iI'],
+    ['Inbox - Five Nights at Freddy＇s AR: Special Delivery', 'LtjKol5_5mE'],
         //definitely stock tracks
-    ['Shop - Five Nights at Freddy＇s: Special Delivery', 'WHDSNxktrGM'],
+    ['Shop - Five Nights at Freddy＇s AR: Special Delivery', 'WHDSNxktrGM'],
 
     //freddy in space 2
     ['Purple Smasher - Freddy in Space 2', '49glGUHi2g8'],
@@ -412,3 +412,21 @@ songs = [
     ['Main Menu - THE JOY OF CREATION', 'ezNCjmUrjgk'],
 
 ];
+
+function get_day(){
+    var GETfirst_day = new Date("12/21/2024");
+    var GETcurrent_day = new Date("");
+    var GETdifference_in_time = GETcurrent_day.getTime() - GETfirst_day.getTime();
+    return Math.floor(GETdifference_in_time / (1000 * 3600 * 24)) + 1;
+}
+
+// new tracks - 25.12.2024 (#5)
+if(get_day() >= 5){
+    var newsongs = [
+        ['Turtle Crusher C - Five Nights at Freddy＇s: Sister Location', 'L81hEIqNlM0'],
+        ['Encounter: 8-Bit Baby / "Turtle Corrupter" - Five Nights at Freddy＇s AR: Special Delivery', '3W3A-Ak8LIA'],
+        ['Encounter: Arctic Ballora / Dance of the Sugar Plum Fairy - Five Nights at Freddy＇s AR: Special Delivery', 'mxsjk8iXWgM'],
+        ['Encounter: Golden Freddy - Five Nights at Freddy＇s AR: Special Delivery', '6rHGVJ-5-pc'],
+    ];
+    songs = songs.concat(newsongs);
+}
