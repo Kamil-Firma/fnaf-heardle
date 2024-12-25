@@ -321,9 +321,9 @@ songs = [
     ['Doing Well - Five Nights at Freddy＇s (Movie)', 'NqRpX00qbZw', 'The Newton Brothers'],
     ['The Rabbit Lives - Five Nights at Freddy＇s (Movie)', 'C_NuaIu18Jo', 'The Newton Brothers'],
     ['My Grandfather＇s Clock - Five Nights at Freddy＇s (Movie)', '3TarZctjb5k', 'The Newton Brothers'],
-    ['Official Teaser Music - Five Nights at Freddy＇s (Movie)', 'EGDsaU6_Vy4', 'The Newton Brothers'],
-    ['Official Trailer Music - Five Nights at Freddy＇s (Movie)', 'MCHlP2aPcTg', 'The Newton Brothers'],
-    ['Final Trailer Music - Five Nights at Freddy＇s (Movie)', '5EUV2EYOvQA', 'The Newton Brothers'],
+    ['Official Teaser Music - Five Nights at Freddy＇s (Movie)', 'EGDsaU6_Vy4', 'TOTEM'],
+    ['Official Trailer Music - Five Nights at Freddy＇s (Movie)', 'MCHlP2aPcTg', 'TOTEM'],
+    ['Final Trailer Music - Five Nights at Freddy＇s (Movie)', '5EUV2EYOvQA', 'TOTEM'],
         //licensed
     ['Too Late For Tears - Five Nights at Freddy＇s (Movie)', 'hArq9n7s4Ro', 'Andrea Litkei & Ervin Litkei'],
     ['Talking In Your Sleep - Five Nights at Freddy＇s (Movie)', 'psXiG-faVOM', 'The Romantics'],
