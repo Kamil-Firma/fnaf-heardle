@@ -310,7 +310,7 @@
 				win = 1;
 				document.getElementById('play_progress_outer').innerHTML = "";
 				document.getElementById('searchbox').innerHTML = "";
-				document.getElementById('results').innerHTML = "You got it!<br><br><small>The song was:<br>"+just_titles[today_song]+"</small>";
+				document.getElementById('results').innerHTML = "You got it!<br><small>The song was:<br>"+just_titles[today_song]+"<br>by<br>"+songs[today_song][2]+"</small>";
 				document.getElementById('results_clipboard').style.visibility = 'visible';
 
 				clearTimeout(curr_timeout);
@@ -320,7 +320,7 @@
 				win = -1;
 				document.getElementById('play_progress_outer').innerHTML = "";
 				document.getElementById('searchbox').innerHTML = "";
-				document.getElementById('results').innerHTML = "Better luck next time!<br><br><small>The song was:<br>"+just_titles[today_song]+"</small>";
+				document.getElementById('results').innerHTML = "Better luck next time!<br><small>The song was:<br>"+just_titles[today_song]+"<br>by<br>"+songs[today_song][2]+"</small>";
 				document.getElementById('results_clipboard').style.visibility = 'visible';
 
 				clearTimeout(curr_timeout);
