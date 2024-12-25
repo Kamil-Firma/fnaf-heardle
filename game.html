@@ -93,11 +93,20 @@
 				background-color: #696969;
 			}
 
-			#results {
-				font-size: 50;
-			}
-			#results_clipboard {
+			#results_over {
+				background-color: black;
+				border: 5px solid white;
+				width: 50%;
+				padding: 10;
 				visibility: collapse;
+			}
+			#results_header {
+				color: yellow;
+				font-size: 35;
+			}
+			#results {
+				font-size: 27;
+				text-align: left;
 			}
 
 			#overplayer {
@@ -134,14 +143,18 @@
 
 			<div id="searchbox">
 				<input type="text" id='searchbox_text' placeholder="Search here!" autocomplete="off" onkeyup="search()">
-				<button onclick="submit()">SUBMIT</button>
+				<button onclick="submit(0)">SUBMIT</button>
+				<button onclick="submit(1)">SKIP</button>
 				<div id="autocomplete"></div>
 			</div>
 
-			<div id="results"></div>
-			<div id="results_clipboard">
-				<br>
-				<button onclick="copyresult()">COPY RESULT TO CLIPBOARD</button>
+			<div id="results_over">
+				<div id="results_header"></div>
+				<div id="results"></div>
+				<div id="results_clipboard">
+					<br>
+					<button onclick="copyresult()">COPY RESULT TO CLIPBOARD</button>
+				</div>
 			</div>
 		</center>
 		
@@ -260,35 +273,48 @@
 			check_for_apostrophe();
 
 			//submitting --------------------------------------------------------
-			function submit() {
-				submitted = document.getElementById('searchbox_text').value;
-				submitted_val = -1;
-				for(i=0; i<songs.length; i++){
-					if(submitted.toLowerCase() == just_titles[i].toLowerCase()){
-						submitted_val = i;
-						i = songs.length;
+			function submit(if_skip) {
+				if(if_skip == 0){
+					submitted = document.getElementById('searchbox_text').value;
+					submitted_val = -1;
+					for(i=0; i<songs.length; i++){
+						if(submitted.toLowerCase() == just_titles[i].toLowerCase()){
+							submitted_val = i;
+							i = songs.length;
+						}
 					}
-				}
-				if(submitted_val != -1 && win == 0 && submitted != ""){
-					play_sfx(0);
+					if( submitted_val != -1 && win == 0 && submitted != "" ){
+						play_sfx(0);
 
-					guess_history[guess] = submitted_val;
+						guess_history[guess] = submitted_val;
+						update_guess_history();
+						document.getElementById('searchbox_text').value = "";
+						search();
+
+						if(submitted_val == today_song){
+							//correct guess
+							endgame(1);
+						}else{
+							//wrong guess
+							guess ++;
+							if(guess>=6){
+								endgame(0);
+							}
+						}
+					}else{
+						play_sfx(1);
+					}
+				}else{
+					play_sfx(0);
+					guess_history[guess] = -2;
 					update_guess_history();
 					document.getElementById('searchbox_text').value = "";
 					search();
 
-					if(submitted_val == today_song){
-						//correct guess
-						win_loop();
-					}else{
-						//wrong guess
-						guess ++;
-						if(guess>=6){
-							lose_loop();
-						}
+					guess ++;
+					if(guess>=6){
+						endgame(0);
 					}
-				}else{
-					play_sfx(1);
 				}
 			}
 			function update_guess_history() {
@@ -296,6 +322,9 @@
 					if(guess_history[i]==""){
 						document.getElementById('guess'+i).innerHTML = "";
 						document.getElementById('guess'+i).style.backgroundColor = '#1d1d1d';
+					}else if(guess_history[i]==-2){
+						document.getElementById('guess'+i).innerHTML = "Skipped";
+						document.getElementById('guess'+i).style.backgroundColor = '#323232';
 					}else{
 						document.getElementById('guess'+i).innerHTML = just_titles[guess_history[i]];
 						document.getElementById('guess'+i).style.backgroundColor = '#731717';
@@ -306,22 +335,18 @@
 				}
 			}
 
-			function win_loop() {
-				win = 1;
+			function endgame(ifwin) {
+				if(ifwin==1){
+					win = 1;
+					document.getElementById('results_header').innerHTML = "You got it!";
+				}else{
+					win = -1;
+					document.getElementById('results_header').innerHTML = "Better luck next time!";
+				}
 				document.getElementById('play_progress_outer').innerHTML = "";
 				document.getElementById('searchbox').innerHTML = "";
-				document.getElementById('results').innerHTML = "You got it!<br><small>The song was:<br>"+just_titles[today_song]+"<br>by<br>"+songs[today_song][2]+"</small>";
-				document.getElementById('results_clipboard').style.visibility = 'visible';
-
-				clearTimeout(curr_timeout);
-				player.playVideo();
-			}
-			function lose_loop() {
-				win = -1;
-				document.getElementById('play_progress_outer').innerHTML = "";
-				document.getElementById('searchbox').innerHTML = "";
-				document.getElementById('results').innerHTML = "Better luck next time!<br><small>The song was:<br>"+just_titles[today_song]+"<br>by<br>"+songs[today_song][2]+"</small>";
-				document.getElementById('results_clipboard').style.visibility = 'visible';
+				document.getElementById('results_over').style.visibility = 'visible';
+				document.getElementById('results').innerHTML = "The song was:<hr>"+just_titles[today_song]+"<br><small>by "+songs[today_song][2]+"</small>";
 
 				clearTimeout(curr_timeout);
 				player.playVideo();
