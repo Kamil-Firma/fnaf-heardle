@@ -395,18 +395,18 @@ songs = [
     ['To Be Continued - POPGOES Arcade', 'HFcfaa_SMSw', 'Radiarc'],
 
     //mypopgoes <--- can you believe it
-    ['Attic - myPOPGOES', 'cnLgHVpjtLE', 'Radiarc'],
-    ['Mysterious (Reversed) / Ambience - myPOPGOES', 'cG8_uoCVErw', 'Emil Macko'],
-    ['Searching - myPOPGOES', 'fk9U-t-VPGc', 'Radiarc'],
-    ['Mysterious - myPOPGOES', 'X9X8ZYCmBj4', 'Emil Macko'],
-    ['Main Theme - myPOPGOES', 'd0-xBEn_X7Q', 'Emil Macko'],
-    ['Challenge - myPOPGOES', 'ccxf2gUyEDw', 'KamilFirma'],
-    ['Fishing - myPOPGOES', 'TsVup12XEm0', 'KamilFirma'],
-    ['Topping Juggle - myPOPGOES', 'DO9TnE_H0O0', 'KamilFirma'],
-    ['Longest Popgoes - myPOPGOES', 'e3cqE_38xvg', 'KamilFirma'],
-    ['Pest Control - myPOPGOES', 'omF2hmJm1VA', 'KamilFirma'],
-    ['Whack-A-Rabbit - myPOPGOES', 'NoiRhdewdEg', 'KamilFirma'],
-    ['Complete Ending - myPOPGOES', 'VQVDsqNEqUg', 'Radiarc'],
+    ['Attic Ambience - myPOPGOES', 'cnLgHVpjtLE', 'Radiarc'],
+    ['Attic Ambience (Classic) - myPOPGOES', 'cG8_uoCVErw', 'Emil Macko'],
+    ['Memory Ambience - myPOPGOES', 'fk9U-t-VPGc', 'Radiarc'],
+    ['Memory Ambience (Classic) - myPOPGOES', 'X9X8ZYCmBj4', 'Emil Macko'],
+    ['Campaign Theme - myPOPGOES', 'd0-xBEn_X7Q', 'Emil Macko'],
+    ['Endless Theme - myPOPGOES', 'ccxf2gUyEDw', 'KamilFirma'],
+    ['Fishing Theme - myPOPGOES', 'TsVup12XEm0', 'KamilFirma'],
+    ['Topping Juggle Theme - myPOPGOES', 'DO9TnE_H0O0', 'KamilFirma'],
+    ['Longest Popgoes Theme - myPOPGOES', 'e3cqE_38xvg', 'KamilFirma'],
+    ['Pest Control Theme - myPOPGOES', 'omF2hmJm1VA', 'KamilFirma'],
+    ['Whack-a-Rabbit Theme - myPOPGOES', 'NoiRhdewdEg', 'KamilFirma'],
+    ['Happy Birthday - myPOPGOES', 'VQVDsqNEqUg', 'Radiarc'],
     ['My Bonnie - myPOPGOES', 'jQCsMa0BNZM', 'KamilFirma'],
 
     //tjoc
@@ -428,6 +428,20 @@ if(get_day() >= 5){
         ['Encounter: 8-Bit Baby / "Turtle Corrupter" - Five Nights at Freddy＇s AR: Special Delivery', '3W3A-Ak8LIA', 'Leon Riskin'],
         ['Encounter: Arctic Ballora / Dance of the Sugar Plum Fairy - Five Nights at Freddy＇s AR: Special Delivery', 'mxsjk8iXWgM', 'Unknown Composer'],
         ['Encounter: Golden Freddy - Five Nights at Freddy＇s AR: Special Delivery', '6rHGVJ-5-pc', 'Unknown Composer'],
+    ];
+    songs = songs.concat(newsongs);
+}
+
+// new tracks - 01.02.2025 (#43)
+if(get_day() >= 43){
+    var newsongs = [
+        ['Campaign Theme (Special) - myPOPGOES', 'Ho4wL1rzLxM', 'KamilFirma'],
+        ['Endless Theme (Special) - myPOPGOES', 'BDDwCfodE28', 'KamilFirma'],
+        ['Fishing Theme (Special) - myPOPGOES', 'KMurw-aizAQ', 'KamilFirma'],
+        ['Topping Juggle Theme (Special) - myPOPGOES', 'oshD-BszD4g', 'KamilFirma'],
+        ['Longest Popgoes Theme (Special) - myPOPGOES', 'csqCIrnIIyo', 'KamilFirma'],
+        ['Pest Control Theme (Special) - myPOPGOES', 'W-yj68ZoSTg', 'KamilFirma'],
+        ['Whack-a-Rabbit Theme (Special) - myPOPGOES', 'MD3hOozDoeo', 'KamilFirma'],
     ];
     songs = songs.concat(newsongs);
 }
