@@ -186,8 +186,13 @@
 			difference_in_time = current_day.getTime() - first_day.getTime();
 			difference_in_days = Math.floor(difference_in_time / (1000 * 3600 * 24)) + 1;
 			
+			yellowbear = 0;
 			if( custom_day != -1 ){
 				difference_in_days = custom_day;
+				if(custom_day == 1987){
+					yellowbear = 1;
+					yellowbear_scared = 0;
+				}
 			}
 
 			mode = 0;
@@ -285,6 +290,20 @@
 
 			//submitting --------------------------------------------------------
 			function submit(if_skip) {
+				//for 1987 easter egg
+				if(yellowbear == 1 && yellowbear_scared == 0){
+					document.body.style.backgroundImage = "url('assets/aaa/yellowbear.png')";
+					document.body.style.backgroundSize = "contain";
+					document.body.style.backgroundRepeat = "no-repeat";
+					
+					var audio = new Audio( 'assets/aaa/XSCREAM2.wav' );
+					audio.play();
+
+					document.body.innerHTML = "";
+					yellowbear_scared = 1;
+					setTimeout(post_yellowbear, 800);
+				}
+
 				if(if_skip == 0){
 					submitted = document.getElementById('searchbox_text').value;
 					submitted_val = -1;
@@ -399,6 +418,11 @@
 			function next_infinite() {
 				play_sfx(0);
 				location.reload();
+			}
+
+			//1987 easter egg end
+			function post_yellowbear(){
+				window.location.href = 'index';
 			}
 		</script>
 	</body>
