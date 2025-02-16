@@ -174,10 +174,21 @@
 			lengths = [1, 2, 5, 7, 10, 15, 9999];
 			win = 0;
 
+			//custom day
+			custom_day = -1;
+			if(window.location.search.substring(0,11) == '?custom_day'){
+				custom_day = Number(window.location.search.substring(12));
+				alert("CUSTOM DAY: "+custom_day);
+			}
+
 			first_day = new Date("12/21/2024");
 			current_day = new Date();
 			difference_in_time = current_day.getTime() - first_day.getTime();
 			difference_in_days = Math.floor(difference_in_time / (1000 * 3600 * 24)) + 1;
+			
+			if( custom_day != -1 ){
+				difference_in_days = custom_day;
+			}
 
 			mode = 0;
 			document.getElementById('headertext').innerHTML = "Five Nights at Freddy's Heardle (#" + difference_in_days + ")";
