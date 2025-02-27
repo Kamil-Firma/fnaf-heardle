@@ -198,7 +198,11 @@
 			mode = 0;
 			document.getElementById('headertext').innerHTML = "Five Nights at Freddy's Heardle (#" + difference_in_days + ")";
 			
-			if(window.location.search == '?infinite'){
+			infinitesong = -1;
+			if(window.location.search.substring(0,9) == '?infinite'){
+				if(window.location.search.substring(0,14) == '?infinite_song'){
+					infinitesong = Number(atob(window.location.search.substring(15)));
+				}
 				mode = 1;
 				document.body.style.backgroundImage = "url('assets/bg_sl.png')";
 				document.getElementById('headertext').innerHTML = "Five Nights at Freddy's Heardle (Infinite)";
@@ -241,6 +245,9 @@
 				Math.seedrandom(difference_in_days);
 			}
 			today_song = rng(1, songs.length-1);
+			if(infinitesong != -1){
+				today_song = infinitesong;
+			}
 
 			//search autocomplete --------------------------------------------------------
 			just_titles = [];
@@ -382,8 +389,14 @@
 				player.playVideo();
 			}
 			function copyresult() {
-				var result = "Five Nights at Freddy's Heardle #";
-				result += difference_in_days;
+				var result = "Five Nights at Freddy's Heardle ";
+				if(mode==0){
+					result += "#";
+					result += difference_in_days;
+				}else{
+					result += "(Infinite) - Song #";
+					result += btoa(today_song);
+				}
 				result += "\n\n";
 				result += "🐻";
 
@@ -406,6 +419,9 @@
 				result += squares;
 				result += "\n\n";
 				result += window.location.href;
+				if(mode==1 && infinitesong==-1){
+					result += "_song="+btoa(today_song);
+				}
 
 				navigator.clipboard.writeText(result);
 				play_sfx(0);
@@ -413,11 +429,11 @@
 
 			//infinite mode ending
 			if(mode == 1){
-				document.getElementById('results_clipboard').innerHTML = '<br><button onclick="next_infinite()">NEXT SONG</button>';
+				document.getElementById('results_clipboard').innerHTML = '<br><button onclick="copyresult()">COPY RESULT TO CLIPBOARD</button> | <button onclick="next_infinite()">NEXT SONG</button>';
 			}
 			function next_infinite() {
 				play_sfx(0);
-				location.reload();
+				window.location.href = 'game?infinite';
 			}
 
 			//1987 easter egg end
