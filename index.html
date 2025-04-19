@@ -38,22 +38,39 @@
 			#description {
 				font-size: 35;
 			}
+			#version {
+				font-size: 15;
+				position: absolute;
+				bottom: 32;
+				right: 32;
+				color: #979797;
+			}
 		</style>
 	</head>
 	<body>
 		<div id='header'>
-			Five Nights at Freddy's Heardle<hr>
+			Five Nights at Freddy's Heardle
+			<hr>
 		</div>
+
 		<br><br><br>
-			<div id="select">
-				SELECT GAME MODE:
-				<br><br>
-				<a href='game?daily'><button onmouseover="hover(0)">DAILY</button></a>
-				<a href='game?infinite'><button onmouseover="hover(1)">INFINITE</button></a>
-				<a href='djmm'><button onmouseover="hover(2)">DJMM</button></a>
-				<br><br>
-				<div id="description"></div>
-			</div>
+
+		<div id="select">
+			SELECT GAME MODE:
+			<br><br>
+			<a href='game?daily'><button onmouseover="hover(0)">DAILY</button></a>
+			<a href='game?infinite'><button onmouseover="hover(1)">INFINITE</button></a>
+			<br><br>
+			<a href='djmm'><button onmouseover="hover(2)">DJ MUSIC TIME</button></a>
+			<br><br>
+			<div id="description"></div>
+		</div>
+
+		<br><br><br>
+
+		<div id="version">
+			last updated 19 April 2025
+		</div>
 		
 		<!-- scripts -->
 		<script src="basicfunctions.js"></script>
