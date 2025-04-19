@@ -415,10 +415,19 @@ songs = [
 ];
 
 function get_day(){
-    var GETfirst_day = new Date("12/21/2024");
-    var GETcurrent_day = new Date();
-    var GETdifference_in_time = GETcurrent_day.getTime() - GETfirst_day.getTime();
-    return Math.floor(GETdifference_in_time / (1000 * 3600 * 24)) + 1;
+    var cst = -1;
+    if(window.location.search.substring(0,11) == '?custom_day'){
+        cst = Number(window.location.search.substring(12));
+    }
+
+    if( cst==-1 ){
+        var GETfirst_day = new Date("12/21/2024");
+        var GETcurrent_day = new Date();
+        var GETdifference_in_time = GETcurrent_day.getTime() - GETfirst_day.getTime();
+        return Math.floor(GETdifference_in_time / (1000 * 3600 * 24)) + 1;
+    }else{
+        return cst;
+    }
 }
 
 // new tracks - 25.12.2024 (#5)
