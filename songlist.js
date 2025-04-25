@@ -112,7 +112,7 @@ songs = [
     ['Mangle Teaser Video Music - Five Nights at Freddy＇s AR: Special Delivery', 'Q2IpypM4JtY', 'Kadet Kuhne'],
     ['The Sound of Falling (Unused) - Five Nights at Freddy＇s AR: Special Delivery', 'CdGqLyk9RbM', 'Leon Riskin'],
         //maybe stock tracks
-    ['Game Intro / "Lucky" - Five Nights at Freddy＇s AR: Special Delivery', 'yhYy8YBZ0iI', 'Unknown Composer'],
+    ['Game Intro / Lucky - Five Nights at Freddy＇s AR: Special Delivery', 'yhYy8YBZ0iI', 'Unknown Composer'],
     ['Inbox / E-Mail - Five Nights at Freddy＇s AR: Special Delivery', 'LtjKol5_5mE', 'Unknown Composer'],
         //definitely stock tracks
     ['Shop - Five Nights at Freddy＇s AR: Special Delivery', 'WHDSNxktrGM', 'deskspace'],
@@ -434,7 +434,7 @@ function get_day(){
 if(get_day() >= 5){
     var newsongs = [
         ['Turtle Crusher C - Five Nights at Freddy＇s: Sister Location', 'L81hEIqNlM0', 'Leon Riskin'],
-        ['Encounter: 8-Bit Baby / "Turtle Corrupter" - Five Nights at Freddy＇s AR: Special Delivery', '3W3A-Ak8LIA', 'Leon Riskin'],
+        ['Encounter: 8-Bit Baby / Turtle Corrupter - Five Nights at Freddy＇s AR: Special Delivery', '3W3A-Ak8LIA', 'Leon Riskin'],
         ['Encounter: Arctic Ballora / Dance of the Sugar Plum Fairy - Five Nights at Freddy＇s AR: Special Delivery', 'mxsjk8iXWgM', 'Unknown Composer'],
         ['Encounter: Golden Freddy - Five Nights at Freddy＇s AR: Special Delivery', '6rHGVJ-5-pc', 'Unknown Composer'],
     ];
