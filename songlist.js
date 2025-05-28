@@ -454,3 +454,11 @@ if(get_day() >= 43){
     ];
     songs = songs.concat(newsongs);
 }
+
+// new tracks - 29.05.2025 (#160)
+if(get_day() >= 160){
+    var newsongs = [
+        ['The Animatronic: Lobby - Dead by Daylight CHAPTER 36: Five Nights at Freddy＇s', 'pXdkmj1K8Yo', 'Unknown Composer'],
+    ];
+    songs = songs.concat(newsongs);
+}
