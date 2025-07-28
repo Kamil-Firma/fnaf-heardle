@@ -430,8 +430,13 @@ function get_day(){
     }
 }
 
+is_infinite = 0;
+if(window.location.search.substring(0,9) == '?infinite'){
+    is_infinite = 1;
+}
+
 // new tracks - 25.12.2024 (#5)
-if(get_day() >= 5){
+if(get_day() >= 5 || is_infinite==1){
     var newsongs = [
         ['Turtle Crusher C - Five Nights at Freddy＇s: Sister Location', 'L81hEIqNlM0', 'Leon Riskin'],
         ['Encounter: 8-Bit Baby / Turtle Corrupter - Five Nights at Freddy＇s AR: Special Delivery', '3W3A-Ak8LIA', 'Leon Riskin'],
@@ -442,7 +447,7 @@ if(get_day() >= 5){
 }
 
 // new tracks - 01.02.2025 (#43)
-if(get_day() >= 43){
+if(get_day() >= 43 || is_infinite==1){
     var newsongs = [
         ['Campaign Theme (Special) - myPOPGOES', 'Ho4wL1rzLxM', 'KamilFirma'],
         ['Endless Theme (Special) - myPOPGOES', 'BDDwCfodE28', 'KamilFirma'],
@@ -456,7 +461,7 @@ if(get_day() >= 43){
 }
 
 // new tracks - 29.05.2025 (#160)
-if(get_day() >= 160){
+if(get_day() >= 160 || is_infinite==1){
     var newsongs = [
         ['The Animatronic Lobby - Dead by Daylight CHAPTER 36: Five Nights at Freddy＇s', 'pXdkmj1K8Yo', 'Michel F. April'],
     ];
@@ -464,7 +469,7 @@ if(get_day() >= 160){
 }
 
 // new tracks - 29.07.2025 (#221)
-if(get_day() >= 221){
+if(get_day() >= 221 || is_infinite==1){
     var newsongs = [
         ['Dark Roast Triple Shot Extravaganza - Five Nights at Freddy＇s: Secret of the Mimic', 'msXQeoua8n8', 'Leon Riskin'],
         ['Welcome Show - Five Nights at Freddy＇s: Secret of the Mimic', 'mO-09RUya8A', 'Marcy Mezei'],
