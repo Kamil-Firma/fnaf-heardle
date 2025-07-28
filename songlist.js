@@ -234,7 +234,7 @@ songs = [
     ['DJMM - Five Nights at Freddy＇s: Help Wanted 2', 'rTFbh0v-PuU', 'Marcy Mezei'],
     ['Bonnie Bowl - Five Nights at Freddy＇s: Help Wanted 2', 'Zfd_5gZe4pw', 'A Shell In The Pit'],
     ['Tales from the One-Eyed Cat Tavern - Five Nights at Freddy＇s: Help Wanted 2', 'totOZi83TuM', 'Leon Riskin'],
-    ['My Grandfather＇s Clock - Five Nights at Freddy＇s: Help Wanted 2', 'i8YoiYEcbWA', 'Marcy Mezei'],
+    ['My Grandfather＇s Clock - Five Nights at Freddy＇s: Help Wanted 2 / Secret of the Mimic', 'i8YoiYEcbWA', 'Marcy Mezei'],
     ['Doomsday Ride - Five Nights at Freddy＇s: Help Wanted 2', 'pnK9sU2Qowo', 'Leon Riskin'],
     ['Scorched Cranberries - Five Nights at Freddy＇s: Help Wanted 2', 'Gep216Lecl4', 'Leon Riskin'],
     ['Gracefully Into the Abyss (Reprise) - Five Nights at Freddy＇s: Help Wanted 2', '5pTJHMtAK-I', 'Leon Riskin'],
@@ -458,7 +458,33 @@ if(get_day() >= 43){
 // new tracks - 29.05.2025 (#160)
 if(get_day() >= 160){
     var newsongs = [
-        ['The Animatronic: Lobby - Dead by Daylight CHAPTER 36: Five Nights at Freddy＇s', 'pXdkmj1K8Yo', 'Unknown Composer'],
+        ['The Animatronic Lobby - Dead by Daylight CHAPTER 36: Five Nights at Freddy＇s', 'pXdkmj1K8Yo', 'Michel F. April'],
+    ];
+    songs = songs.concat(newsongs);
+}
+
+// new tracks - 29.07.2025 (#221)
+if(get_day() >= 221){
+    var newsongs = [
+        ['Dark Roast Triple Shot Extravaganza - Five Nights at Freddy＇s: Secret of the Mimic', 'msXQeoua8n8', 'Leon Riskin'],
+        ['Welcome Show - Five Nights at Freddy＇s: Secret of the Mimic', 'mO-09RUya8A', 'Marcy Mezei'],
+        ['Prickly Pal - Five Nights at Freddy＇s: Secret of the Mimic', 'hFyrZsQzk7k', 'Leon Riskin'],
+        ['Unstrung and Unhinged - Five Nights at Freddy＇s: Secret of the Mimic', 'oG8qvH7qS3M', 'Leon Riskin'],
+        ['Exit Through The Gift Shop - Five Nights at Freddy＇s: Secret of the Mimic', 'qnizK3dquws', 'Leon Riskin'],
+        ['Moments Before Disaster - Five Nights at Freddy＇s: Secret of the Mimic', 'bkGIQsF_5cw', 'Leon Riskin'],
+        ['Catastrophe Behind Door Number 3 - Five Nights at Freddy＇s: Secret of the Mimic', 'YeHHz9Yn2YE', 'Leon Riskin'],
+        ['Artemis On A Collision Course - Five Nights at Freddy＇s: Secret of the Mimic', 'S9ABfJWowcY', 'Leon Riskin'],
+        ['Tragedy and Comedy - Five Nights at Freddy＇s: Secret of the Mimic', 'fhb2EUjXJBw', 'Leon Riskin'],
+        ['Tragedy and Comedy (Hesitation) - Five Nights at Freddy＇s: Secret of the Mimic', 'uAOVPiA9Lu4', 'Leon Riskin'],
+        ['Way Off the Wagon - Five Nights at Freddy＇s: Secret of the Mimic', 'NbH46Q26YDA', 'Leon Riskin'],
+        ['Dreamland Stardust - Five Nights at Freddy＇s: Secret of the Mimic', 'RiyNkwj3ZHA', 'Leon Riskin'],
+        ['Backstage Flamingos - Five Nights at Freddy＇s: Secret of the Mimic', '_5FK4BBkXdE', 'Leon Riskin'],
+        ['Bitter Sweet Sedation - Five Nights at Freddy＇s: Secret of the Mimic', 'lTakqNACEgY', 'Leon Riskin'],
+        ['Back To the Iron Lung - Five Nights at Freddy＇s: Secret of the Mimic', '2k2XROqb3yA', 'Leon Riskin'],
+        ['Backface Culling Paranoia - Five Nights at Freddy＇s: Secret of the Mimic', 'nSYiyyg4MnU', 'Leon Riskin'],
+        ['Breathing Corridors - Five Nights at Freddy＇s: Secret of the Mimic', 'UNXmHLltKH8', 'Leon Riskin'],
+        ['Shapeshifter`s Wrath - Five Nights at Freddy＇s: Secret of the Mimic', '_XdXVQwFFjM', 'Leon Riskin'],
+        ['A Poisonous Kiss - Five Nights at Freddy＇s: Secret of the Mimic', 'RXO90Nc9Lso', 'Leon Riskin'],
     ];
     songs = songs.concat(newsongs);
 }
